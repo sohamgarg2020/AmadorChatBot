@@ -52,6 +52,6 @@ while True:
     query = input("Type your querry here: ")
     if (query == "pass" or query == "exit"):
         break
-    check_related_questions(query, 30)
+    check_related_questions(query, 25)
 
         
