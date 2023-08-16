@@ -10,29 +10,48 @@ questions = {"How do you get a schedule change": "Go to the amador valley counse
         "Where can I find the clubs at our school?": "Here is a list of all the clubs at our school: https://sites.google.com/site/avstudentweb/clubs"}
 
 questions_list = list(questions.keys())
+possible_queries = []
 
 def check_related_questions(question, limit):
-    curr = 0
-    number = -1
     for i in range(len(questions_list)):
-        if (int(fuzz.ratio(question.lower(), questions_list[i].lower())) >= curr):
-            number = i
-            curr = int(fuzz.ratio(question.lower(), questions_list[i].lower()))
-
+        if (int(fuzz.ratio(question.lower(), questions_list[i].lower())) >= limit):
+            if (int(fuzz.ratio(question.lower(), questions_list[i].lower())) >= 10):
+                possible_queries.append(questions_list[i])
+    if len(possible_queries) == 1:
+        print("Here is the question that we found most closely related to your query:")
+        print(possible_queries[0])
+        print(questions[possible_queries[0]])
+    elif len(possible_queries) > 0:
+        print("Here are the possible questions we got based on the keyword. Please type which one you are interested in.")
+        print("0. None of these")
+        for j in range(len(possible_queries)):
+            print(j+1,f". {possible_queries[j]}")
+        x = int(input("Which query are you interested in? "))
+        if x <= len(possible_queries) or x >= 0:
+            if x == 0:
+                print("Sorry, please try another input.")
+            else:
+                print(questions[possible_queries[x-1]])
+    else:
+        print("Sorry, please try another input.")
+    
+"""
     if curr >= limit:
         print("The closest question that we could find was:", questions_list[number])
         print("The answer to your question is:", questions[questions_list[number]])
     else:
         print("Sorry, I'm not sure.")
-
+"""
 
 
 
 print("Hello! Welcome to the Amador Chat Bot!")
 while True:
-    query = input("What is the question that you have? Type pass or exit if you want to quit. ")
+    print("What is the question that you have?")
+    print("Type \"pass\" or \"exit\" if you want to stop chatting!")
+    query = input("Type your querry here: ")
     if (query == "pass" or query == "exit"):
         break
-    check_related_questions(query, 40)
+    check_related_questions(query, 30)
 
         
