@@ -40,7 +40,7 @@ def check_related_questions(question):
         print("0. None of these.")
         count = 1
         for j in possible_queries:
-            print(count, f". {j[0]}")
+            print(f"{count}. {j[0]}")
             count += 1
         x = input("Which query are you interested in? ")
         works = False
