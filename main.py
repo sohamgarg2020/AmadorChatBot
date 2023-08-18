@@ -19,6 +19,11 @@ def check_related_questions(question):
 
     for q in questions_list:
         ratio = fuzz.ratio(question.lower(), q.lower())
+        if ratio >= 50:
+            print("Here is the question that we found most closely related to your query:")
+            print(q)
+            print(questions[q])
+            return
         if ratio >= 25:
             possible_queries.append((q, ratio))
 
