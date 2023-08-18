@@ -14,12 +14,12 @@ questions = {
 questions_list = list(questions.keys())
 
 
-def check_related_questions(question, limit):
+def check_related_questions(question):
     possible_queries = []
 
     for q in questions_list:
         ratio = fuzz.ratio(question.lower(), q.lower())
-        if ratio >= limit:
+        if ratio >= 25:
             possible_queries.append((q, ratio))
 
     possible_queries.sort(key=lambda x: x[1], reverse=True)
@@ -33,8 +33,10 @@ def check_related_questions(question, limit):
     else:
         print("Here are the possible questions we got based on the keyword. Please type which one you are interested in.")
         print("0. None of these.")
-        for j, (possible_question, _) in enumerate(possible_queries):
-            print(j + 1, f". {possible_question}")
+        count = 1
+        for j in possible_queries:
+            print(count, f". {j[0]}")
+            count += 1
         x = input("Which query are you interested in? ")
         works = False
         while True:
@@ -67,4 +69,4 @@ while True:
     if query == "exit":
         break
 
-    check_related_questions(query, 25)
+    check_related_questions(query)
