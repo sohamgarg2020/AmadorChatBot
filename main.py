@@ -1,4 +1,5 @@
 from fuzzywuzzy import fuzz
+import tkinter as tk
 
 questions = {
     "How do you get a schedule change?": "Go to the amador valley counseling website and then you can request a schedule change.",
