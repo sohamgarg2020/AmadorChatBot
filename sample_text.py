@@ -1,5 +1,6 @@
 from fuzzywuzzy import fuzz
-import tkinter as tk
+import speech_recognition as sr
+import pyttsx3
 
 questions = {
     "How do you get a schedule change?": "Go to the amador valley counseling website and then you can request a schedule change.",
@@ -13,6 +14,14 @@ questions = {
 }
 
 questions_list = list(questions.keys())
+
+def speakText(command):
+    engine = pyttsx3.init()
+    engine.say(command)
+    engine.runAndWait()
+
+
+
 
 
 def check_related_questions(question):
@@ -65,7 +74,27 @@ def check_related_questions(question):
                 break
 
 
-print("Hello! Welcome to the Amador Chat Bot! This Chat Bot is about the enrollment and schedule of students. Possible querries can be about graduation, schedule changes, etc.")
+def main():
+    recognizer = sr.Recognizer()
+
+    # Using the default system microphone as audio source
+    with sr.Microphone(sample_rate=44100, chunk_size=512) as source2:
+        print("Say something...")
+        audio = recognizer.listen(source2)
+
+        try:
+            text = recognizer.recognize_google(audio)
+            print("You said:", text)
+        except sr.UnknownValueError:
+            print("Sorry, I couldn't understand what you said.")
+        except sr.RequestError as e:
+            print(f"Request error: {e}")
+
+if __name__ == "__main__":
+    main()
+
+"""
+print("Hello! Welcome to the Amador Chat Bot!")
 
 while True:
     print("What is the question that you have?")
@@ -76,3 +105,4 @@ while True:
         break
 
     check_related_questions(query)
+"""
